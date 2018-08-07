@@ -1,0 +1,18 @@
+从hello合约调用hello.target合约，并且附加delay效果；
+hello.cpp中有注释；
+
+参考：
+https://blog.csdn.net/ITleaks/article/details/80535318
+https://blog.csdn.net/ITleaks/article/details/80557560
+
+018-08-07T07:56:18.500 signed by eosio [trxs: 0, lib: 11850, confirmed: 0]
+3378830ms thread-0   apply_context.cpp:28          print_debug          ] 
+[(hello.code,hi)->hello.code]: CONSOLE OUTPUT BEGIN =====================
+Hello, from:user, to:user1
+[(hello.code,hi)->hello.code]: CONSOLE OUTPUT END   =====================
+
+018-08-07T07:56:28.500 signed by eosio [trxs: 0, lib: 11870, confirmed: 0]
+3388516ms thread-0   apply_context.cpp:28          print_debug          ] 
+[(hello.target,callme)->hello.target]: CONSOLE OUTPUT BEGIN =====================
+call me from, user1
+[(hello.target,callme)->hello.target]: CONSOLE OUTPUT END   =====================
