@@ -9,7 +9,7 @@ class hello : public eosio::contract {
       using contract::contract;
 
       /// @abi action
-      void hi(account_name from, account_name to) {
+      void hi(account_name from, account_name to, uint64_t sec) {
         require_auth(from);
         print("Hello, from:", name{from}, ", to:", name{to});
 
@@ -19,8 +19,8 @@ class hello : public eosio::contract {
           N(hello.target), N(callme),
           std::make_tuple(to)
         );
-        out.delay_sec = 10;
-        out.send(to, from);
+        out.delay_sec = sec;
+        out.send(123, from);
 
         // action (
         //   //这里{to, active}必须授权给{_self, eosio.code}
@@ -31,17 +31,14 @@ class hello : public eosio::contract {
         // ).send();
       }
 
-      // void delay(uint64_t sec, account_name user) {
-      //   transaction out{};
-      //   // out.actions.emplace_back(permission_level{_self, N(active)}, N(pet), N(feedpet), std::make_tuple(pet.id));
-      //   out.actions.emplace_back(permission_level{_self, N(active)}, N(user), N(hi), user);
-      //   out.delay_sec = sec;
-      //   out.send(user, _self);
-      //   print("test delay ", sec);
-      // }
+      /// @abi action
+      void cancel(uint128_t sender_id) {
+        cancel_deferred(sender_id);
+        print("cancel deferred called");
+      }
 };
 
-EOSIO_ABI(hello, (hi))
+EOSIO_ABI(hello, (hi) (cancel))
 
 //当前合约_self(hello.code)想要以to@active去调用其他合约(hello.target)，
 //必须获得to的授权，即必须在to@active中添加hello.code@eosio.code授权
